@@ -142,16 +142,16 @@ export type PatientSummary = {
 };
 
 export type SHRSummary = {
-  vitals: Array<vitalsDetails>;
-  labResults: string;
-	complaints: string;
-	diagnosis: string;
-	allergies: string;
-	conditions: string;
-	medications: string;
+  vitals: Array<itemDetails>;
+  labResults: Array<itemDetails>;
+	complaints: Array<itemDetails>;
+	diagnosis: Array<itemDetails>;
+	allergies: Array<itemDetails>;
+	conditions: Array<itemDetails>;
+	medications: Array<itemDetails>;
 };
 
-type vitalsDetails = {
+type itemDetails = {
   uuid: string;
 	name: string;
 	dateRecorded: string;

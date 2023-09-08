@@ -7,6 +7,15 @@ import { useSHRSummary } from '../hooks/useSHRSummary';
 import { Printer } from '@carbon/react/icons';
 import { useReactToPrint } from 'react-to-print';
 import PrintComponent from '../print-layout/print.component';
+import {
+    DataTable,
+    Table,
+    TableHead,
+    TableRow,
+    TableHeader,
+    TableBody,
+    TableCell,
+  } from '@carbon/react';
 
 interface SHRSummaryProps {
     patientUuid: string;
@@ -27,7 +36,7 @@ const SharedHealthRecordsSummary: React.FC<SHRSummaryProps> = ({ patientUuid }) 
         onBeforeGetContent: () => setPrintMode(true),
         onAfterPrint: () => setPrintMode(false),
         pageStyle: styles.pageStyle,
-        documentTitle: data?.labResults,
+        documentTitle: "Shared Health Records",
     });
 
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -51,7 +60,22 @@ const SharedHealthRecordsSummary: React.FC<SHRSummaryProps> = ({ patientUuid }) 
         return;
     }
 
-    
+    const tableHeaders = [
+        {
+          key: 'name',
+          header: t('name', 'Name'),
+        },
+        {
+          key: 'value',
+          header: t('value', 'Value'),
+        },
+        {
+          key: 'dateRecorded',
+          header: t('daterecorded', 'Date Recorded'),
+        },
+    ];
+
+    const headers = ['Name', 'Value', 'Date Recorded'];
 
     if (Object.keys(data).length > 0) {
         return (
@@ -75,48 +99,6 @@ const SharedHealthRecordsSummary: React.FC<SHRSummaryProps> = ({ patientUuid }) 
                             {t('print', 'Print')}
                         </Button>
                         )}
-                    </div>
-                    
-                    <div className={styles.container}>
-                        <div className={styles.content}>
-                            <p className={styles.label}>{t('labResults', 'Lab Results')}</p>
-                            <p>
-                                <span className={styles.value}>{data?.labResults ? data?.labResults : '--'}</span>
-                            </p>
-                        </div>
-                        <div className={styles.content}>
-                            <p className={styles.label}>{t('complaints', 'Complaints')}</p>
-                            <p>
-                                <span className={styles.value}>{data?.complaints ? data?.complaints : '--'}</span>
-                            </p>
-                        </div>
-                        <div className={styles.content}>
-                            <p className={styles.label}>{t('diagnosis', 'Diagnosis')}</p>
-                            <p>
-                                <span className={styles.value}>{data?.diagnosis ? data?.diagnosis : '--'}</span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className={styles.container}>
-                        <div className={styles.content}>
-                            <p className={styles.label}>{t('allergies', 'Allergies')}</p>
-                            <p>
-                                <span className={styles.value}>{data?.allergies ? data?.allergies : '--'}</span>
-                            </p>
-                        </div>
-                        <div className={styles.content}>
-                            <p className={styles.label}>{t('conditions', 'Conditions')}</p>
-                            <p>
-                                <span className={styles.value}>{data?.conditions ? data?.conditions : '--'}</span>
-                            </p>
-                        </div>
-                        <div className={styles.content}>
-                            <p className={styles.label}>{t('medications', 'Medications')}</p>
-                            <p>
-                                <span className={styles.value}>{data?.medications ? data?.medications : '--'}</span>
-                            </p>
-                        </div>
                     </div>
 
                     <hr />
@@ -152,6 +134,88 @@ const SharedHealthRecordsSummary: React.FC<SHRSummaryProps> = ({ patientUuid }) 
                             ))
                         ) : (
                         <h4 className={styles.title}> {t('noSHRVitals', 'No SHR Vitals')}</h4>
+                    )}
+
+                    <hr />
+
+                    <div className={isTablet ? styles.tabletHeading : styles.desktopHeading}>
+                        <h4 className={styles.title}> {t('shrLabResults', 'Lab Results')}</h4>
+                    </div>
+
+                    <hr />
+
+                    {Array.isArray(data?.labResults) && data?.labResults.length > 0 ? (
+                        data?.labResults.map((item, index) => (
+                            <div className={styles.container}>
+                                <div className={styles.content}>
+                                    <p className={styles.label}>{t('labResultsName', 'Name')}</p>
+                                    <p>
+                                        <span className={styles.value}>{item?.name ? item?.name : '--'}</span>
+                                    </p>
+                                </div>
+                                <div className={styles.content}>
+                                    <p className={styles.label}>{t('labResultsValue', 'Value')}</p>
+                                    <p>
+                                        <span className={styles.value}>{item?.value ? item?.value : '--'}</span>
+                                    </p>
+                                </div>
+                                <div className={styles.content}>
+                                    <p className={styles.label}>{t('labResultsDateRecorded', 'Date Recorded')}</p>
+                                    <p>
+                                        <span className={styles.value}>{item?.dateRecorded ? item?.dateRecorded : '--'}</span>
+                                    </p>
+                                </div>
+                                <div className={styles.content}>
+                                    <p className={styles.label}>{t('labResultsUuid', 'UUID')}</p>
+                                    <p>
+                                        <span className={styles.value}>{item?.uuid ? item?.uuid : '--'}</span>
+                                    </p>
+                                </div>
+                            </div>
+                            ))
+                        ) : (
+                        <h4 className={styles.title}> {t('noLabResults', 'No Lab Results')}</h4>
+                    )}
+
+                    <hr />
+                    
+                    <div className={isTablet ? styles.tabletHeading : styles.desktopHeading}>
+                        <h4 className={styles.title}> {t('shrComplaints', 'Complaints')}</h4>
+                    </div>
+
+                    <hr />
+
+                    {Array.isArray(data?.complaints) && data?.complaints.length > 0 ? (
+                        data?.complaints.map((item, index) => (
+                            <div className={styles.container}>
+                                <div className={styles.content}>
+                                    <p className={styles.label}>{t('complaintsName', 'Name')}</p>
+                                    <p>
+                                        <span className={styles.value}>{item?.name ? item?.name : '--'}</span>
+                                    </p>
+                                </div>
+                                <div className={styles.content}>
+                                    <p className={styles.label}>{t('complaintsValue', 'Value')}</p>
+                                    <p>
+                                        <span className={styles.value}>{item?.value ? item?.value : '--'}</span>
+                                    </p>
+                                </div>
+                                <div className={styles.content}>
+                                    <p className={styles.label}>{t('complaintsDateRecorded', 'Date Recorded')}</p>
+                                    <p>
+                                        <span className={styles.value}>{item?.dateRecorded ? item?.dateRecorded : '--'}</span>
+                                    </p>
+                                </div>
+                                <div className={styles.content}>
+                                    <p className={styles.label}>{t('complaintsUuid', 'UUID')}</p>
+                                    <p>
+                                        <span className={styles.value}>{item?.uuid ? item?.uuid : '--'}</span>
+                                    </p>
+                                </div>
+                            </div>
+                            ))
+                        ) : (
+                        <h4 className={styles.title}> {t('noComplaints', 'No Complaints')}</h4>
                     )}
 
                     <hr />
