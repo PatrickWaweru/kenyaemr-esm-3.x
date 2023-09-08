@@ -7,6 +7,7 @@ import { useSHRSummary } from '../hooks/useSHRSummary';
 import { Printer } from '@carbon/react/icons';
 import { useReactToPrint } from 'react-to-print';
 import PrintComponent from '../print-layout/print.component';
+import SHRDataTable from './shrDataTable.component'
 import {
     DataTable,
     Table,
@@ -313,6 +314,14 @@ const SharedHealthRecordsSummary: React.FC<SHRSummaryProps> = ({ patientUuid }) 
                     </DataTable>
 
                     <hr />
+
+                    <div className={isTablet ? styles.tabletHeading : styles.desktopHeading}>
+                        <h4 className={styles.title}> {t('shrTest', 'TEST')}</h4>
+                    </div>
+
+                    <hr />
+
+                    <SHRDataTable data={data?.medications} />
                 
                 </div>
                 

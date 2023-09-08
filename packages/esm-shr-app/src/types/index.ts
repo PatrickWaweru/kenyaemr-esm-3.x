@@ -151,7 +151,7 @@ export type SHRSummary = {
 	medications: Array<itemDetails>;
 };
 
-type itemDetails = {
+export type itemDetails = {
   uuid: string;
 	name: string;
 	dateRecorded: string;
