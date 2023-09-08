@@ -85,7 +85,7 @@ const SharedHealthRecordsSummary: React.FC<SHRSummaryProps> = ({ patientUuid }) 
                 <div className={styles.card}>
                 
                     <div className={isTablet ? styles.tabletHeading : styles.desktopHeading}>
-                        <h4 className={styles.title}> {t('shrVitals', 'VITALS')}</h4>
+                        <h4 className={styles.title}> {t('shrVitals', 'Vitals')}</h4>
                         {printMode === false && (
                         <Button
                             size="sm"
@@ -103,38 +103,28 @@ const SharedHealthRecordsSummary: React.FC<SHRSummaryProps> = ({ patientUuid }) 
 
                     <hr />
 
-                    {Array.isArray(data?.vitals) && data?.vitals.length > 0 ? (
-                        data?.vitals.map((item, index) => (
-                            <div className={styles.container}>
-                                <div className={styles.content}>
-                                    <p className={styles.label}>{t('vitalsName', 'Name')}</p>
-                                    <p>
-                                        <span className={styles.value}>{item?.name ? item?.name : '--'}</span>
-                                    </p>
-                                </div>
-                                <div className={styles.content}>
-                                    <p className={styles.label}>{t('vitalsValue', 'Value')}</p>
-                                    <p>
-                                        <span className={styles.value}>{item?.value ? item?.value : '--'}</span>
-                                    </p>
-                                </div>
-                                <div className={styles.content}>
-                                    <p className={styles.label}>{t('vitalsDateRecorded', 'Date Recorded')}</p>
-                                    <p>
-                                        <span className={styles.value}>{item?.dateRecorded ? item?.dateRecorded : '--'}</span>
-                                    </p>
-                                </div>
-                                <div className={styles.content}>
-                                    <p className={styles.label}>{t('vitalsUuid', 'UUID')}</p>
-                                    <p>
-                                        <span className={styles.value}>{item?.uuid ? item?.uuid : '--'}</span>
-                                    </p>
-                                </div>
-                            </div>
-                            ))
-                        ) : (
-                        <h4 className={styles.title}> {t('noSHRVitals', 'No SHR Vitals')}</h4>
-                    )}
+                    <DataTable rows={data?.vitals} headers={headers}>
+                        {({ rows, headers, getHeaderProps, getRowProps }) => (
+                            <Table>
+                            <TableHead>
+                                <TableRow>
+                                {headers.map((header) => (
+                                    <TableHeader {...getHeaderProps({ header })}>{header}</TableHeader>
+                                ))}
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {data?.vitals.map((row) => (
+                                <TableRow {...getRowProps({ row })}>
+                                    <TableCell>{row?.name}</TableCell>
+                                    <TableCell>{row?.value}</TableCell>
+                                    <TableCell>{row?.dateRecorded}</TableCell>
+                                </TableRow>
+                                ))}
+                            </TableBody>
+                            </Table>
+                        )}
+                    </DataTable>
 
                     <hr />
 
@@ -144,38 +134,28 @@ const SharedHealthRecordsSummary: React.FC<SHRSummaryProps> = ({ patientUuid }) 
 
                     <hr />
 
-                    {Array.isArray(data?.labResults) && data?.labResults.length > 0 ? (
-                        data?.labResults.map((item, index) => (
-                            <div className={styles.container}>
-                                <div className={styles.content}>
-                                    <p className={styles.label}>{t('labResultsName', 'Name')}</p>
-                                    <p>
-                                        <span className={styles.value}>{item?.name ? item?.name : '--'}</span>
-                                    </p>
-                                </div>
-                                <div className={styles.content}>
-                                    <p className={styles.label}>{t('labResultsValue', 'Value')}</p>
-                                    <p>
-                                        <span className={styles.value}>{item?.value ? item?.value : '--'}</span>
-                                    </p>
-                                </div>
-                                <div className={styles.content}>
-                                    <p className={styles.label}>{t('labResultsDateRecorded', 'Date Recorded')}</p>
-                                    <p>
-                                        <span className={styles.value}>{item?.dateRecorded ? item?.dateRecorded : '--'}</span>
-                                    </p>
-                                </div>
-                                <div className={styles.content}>
-                                    <p className={styles.label}>{t('labResultsUuid', 'UUID')}</p>
-                                    <p>
-                                        <span className={styles.value}>{item?.uuid ? item?.uuid : '--'}</span>
-                                    </p>
-                                </div>
-                            </div>
-                            ))
-                        ) : (
-                        <h4 className={styles.title}> {t('noLabResults', 'No Lab Results')}</h4>
-                    )}
+                    <DataTable rows={data?.labResults} headers={headers}>
+                        {({ rows, headers, getHeaderProps, getRowProps }) => (
+                            <Table>
+                            <TableHead>
+                                <TableRow>
+                                {headers.map((header) => (
+                                    <TableHeader {...getHeaderProps({ header })}>{header}</TableHeader>
+                                ))}
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {data?.labResults.map((row) => (
+                                <TableRow {...getRowProps({ row })}>
+                                    <TableCell>{row?.name}</TableCell>
+                                    <TableCell>{row?.value}</TableCell>
+                                    <TableCell>{row?.dateRecorded}</TableCell>
+                                </TableRow>
+                                ))}
+                            </TableBody>
+                            </Table>
+                        )}
+                    </DataTable>
 
                     <hr />
                     
@@ -185,42 +165,154 @@ const SharedHealthRecordsSummary: React.FC<SHRSummaryProps> = ({ patientUuid }) 
 
                     <hr />
 
-                    {Array.isArray(data?.complaints) && data?.complaints.length > 0 ? (
-                        data?.complaints.map((item, index) => (
-                            <div className={styles.container}>
-                                <div className={styles.content}>
-                                    <p className={styles.label}>{t('complaintsName', 'Name')}</p>
-                                    <p>
-                                        <span className={styles.value}>{item?.name ? item?.name : '--'}</span>
-                                    </p>
-                                </div>
-                                <div className={styles.content}>
-                                    <p className={styles.label}>{t('complaintsValue', 'Value')}</p>
-                                    <p>
-                                        <span className={styles.value}>{item?.value ? item?.value : '--'}</span>
-                                    </p>
-                                </div>
-                                <div className={styles.content}>
-                                    <p className={styles.label}>{t('complaintsDateRecorded', 'Date Recorded')}</p>
-                                    <p>
-                                        <span className={styles.value}>{item?.dateRecorded ? item?.dateRecorded : '--'}</span>
-                                    </p>
-                                </div>
-                                <div className={styles.content}>
-                                    <p className={styles.label}>{t('complaintsUuid', 'UUID')}</p>
-                                    <p>
-                                        <span className={styles.value}>{item?.uuid ? item?.uuid : '--'}</span>
-                                    </p>
-                                </div>
-                            </div>
-                            ))
-                        ) : (
-                        <h4 className={styles.title}> {t('noComplaints', 'No Complaints')}</h4>
-                    )}
+                    <DataTable rows={data?.complaints} headers={headers}>
+                        {({ rows, headers, getHeaderProps, getRowProps }) => (
+                            <Table>
+                            <TableHead>
+                                <TableRow>
+                                {headers.map((header) => (
+                                    <TableHeader {...getHeaderProps({ header })}>{header}</TableHeader>
+                                ))}
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {data?.complaints.map((row) => (
+                                <TableRow {...getRowProps({ row })}>
+                                    <TableCell>{row?.name}</TableCell>
+                                    <TableCell>{row?.value}</TableCell>
+                                    <TableCell>{row?.dateRecorded}</TableCell>
+                                </TableRow>
+                                ))}
+                            </TableBody>
+                            </Table>
+                        )}
+                    </DataTable>
 
                     <hr />
 
-                    
+                    <div className={isTablet ? styles.tabletHeading : styles.desktopHeading}>
+                        <h4 className={styles.title}> {t('shrDiagnosis', 'Diagnosis')}</h4>
+                    </div>
+
+                    <hr />
+
+                    <DataTable rows={data?.diagnosis} headers={headers}>
+                        {({ rows, headers, getHeaderProps, getRowProps }) => (
+                            <Table>
+                            <TableHead>
+                                <TableRow>
+                                {headers.map((header) => (
+                                    <TableHeader {...getHeaderProps({ header })}>{header}</TableHeader>
+                                ))}
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {data?.diagnosis.map((row) => (
+                                <TableRow {...getRowProps({ row })}>
+                                    <TableCell>{row?.name}</TableCell>
+                                    <TableCell>{row?.value}</TableCell>
+                                    <TableCell>{row?.dateRecorded}</TableCell>
+                                </TableRow>
+                                ))}
+                            </TableBody>
+                            </Table>
+                        )}
+                    </DataTable>
+
+                    <hr />
+
+                    <div className={isTablet ? styles.tabletHeading : styles.desktopHeading}>
+                        <h4 className={styles.title}> {t('shrAllergies', 'Allergies')}</h4>
+                    </div>
+
+                    <hr />
+
+                    <DataTable rows={data?.allergies} headers={headers}>
+                        {({ rows, headers, getHeaderProps, getRowProps }) => (
+                            <Table>
+                            <TableHead>
+                                <TableRow>
+                                {headers.map((header) => (
+                                    <TableHeader {...getHeaderProps({ header })}>{header}</TableHeader>
+                                ))}
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {data?.allergies.map((row) => (
+                                <TableRow {...getRowProps({ row })}>
+                                    <TableCell>{row?.name}</TableCell>
+                                    <TableCell>{row?.value}</TableCell>
+                                    <TableCell>{row?.dateRecorded}</TableCell>
+                                </TableRow>
+                                ))}
+                            </TableBody>
+                            </Table>
+                        )}
+                    </DataTable>
+
+                    <hr />
+
+                    <div className={isTablet ? styles.tabletHeading : styles.desktopHeading}>
+                        <h4 className={styles.title}> {t('shrConditions', 'Conditions')}</h4>
+                    </div>
+
+                    <hr />
+
+                    <DataTable rows={data?.conditions} headers={headers}>
+                        {({ rows, headers, getHeaderProps, getRowProps }) => (
+                            <Table>
+                            <TableHead>
+                                <TableRow>
+                                {headers.map((header) => (
+                                    <TableHeader {...getHeaderProps({ header })}>{header}</TableHeader>
+                                ))}
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {data?.conditions.map((row) => (
+                                <TableRow {...getRowProps({ row })}>
+                                    <TableCell>{row?.name}</TableCell>
+                                    <TableCell>{row?.value}</TableCell>
+                                    <TableCell>{row?.dateRecorded}</TableCell>
+                                </TableRow>
+                                ))}
+                            </TableBody>
+                            </Table>
+                        )}
+                    </DataTable>
+
+                    <hr />
+
+                    <div className={isTablet ? styles.tabletHeading : styles.desktopHeading}>
+                        <h4 className={styles.title}> {t('shrMedications', 'Medications')}</h4>
+                    </div>
+
+                    <hr />
+
+                    <DataTable rows={data?.medications} headers={headers}>
+                        {({ rows, headers, getHeaderProps, getRowProps }) => (
+                            <Table>
+                            <TableHead>
+                                <TableRow>
+                                {headers.map((header) => (
+                                    <TableHeader {...getHeaderProps({ header })}>{header}</TableHeader>
+                                ))}
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {data?.medications.map((row) => (
+                                <TableRow {...getRowProps({ row })}>
+                                    <TableCell>{row?.name}</TableCell>
+                                    <TableCell>{row?.value}</TableCell>
+                                    <TableCell>{row?.dateRecorded}</TableCell>
+                                </TableRow>
+                                ))}
+                            </TableBody>
+                            </Table>
+                        )}
+                    </DataTable>
+
+                    <hr />
                 
                 </div>
                 
